@@ -1,0 +1,15 @@
+{
+  "name": "fittrack-lite",
+  "version": "1.0.0",
+  "description": "FITTRACK Lite — suivi d'entraînement sportif (projet de fin de module)",
+  "scripts": {
+    "server": "json-server --watch db.json --port 3000",
+    "dev": "npx serve . -p 5500"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.4"
+  },
+  "dependencies": {
+    "puppeteer": "^25.8.0"
+  }
+}

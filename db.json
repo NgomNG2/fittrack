@@ -1,0 +1,84 @@
+{
+  "exercises": [
+    { "id": 1, "name": "Développé couché", "muscleGroup": "Pectoraux", "description": "Allongé sur un banc, pousser la barre depuis la poitrine vers le haut.", "difficulty": "intermédiaire" },
+    { "id": 2, "name": "Squat", "muscleGroup": "Jambes", "description": "Flexion des jambes barre sur les épaules, dos droit.", "difficulty": "intermédiaire" },
+    { "id": 3, "name": "Tractions", "muscleGroup": "Dos", "description": "Suspendu à une barre, tirer le corps vers le haut.", "difficulty": "avancé" },
+    { "id": 4, "name": "Curl haltères", "muscleGroup": "Biceps", "description": "Flexion de l'avant-bras avec un haltère dans chaque main.", "difficulty": "débutant" },
+    { "id": 5, "name": "Développé militaire", "muscleGroup": "Épaules", "description": "Pousser la barre au-dessus de la tête en position debout ou assise.", "difficulty": "intermédiaire" },
+    { "id": 6, "name": "Soulevé de terre", "muscleGroup": "Dos", "description": "Soulever une barre du sol jusqu'à la hanche, dos gainé.", "difficulty": "avancé" },
+    { "id": 7, "name": "Fentes", "muscleGroup": "Jambes", "description": "Pas avant en fléchissant les deux genoux à 90°.", "difficulty": "débutant" },
+    { "id": 8, "name": "Dips", "muscleGroup": "Triceps", "description": "Sur des barres parallèles, fléchir puis tendre les bras.", "difficulty": "intermédiaire" },
+    { "id": 9, "name": "Gainage planche", "muscleGroup": "Abdominaux", "description": "Maintenir le corps aligné en appui sur avant-bras et pointes de pieds.", "difficulty": "débutant" },
+    { "id": 10, "name": "Rowing barre", "muscleGroup": "Dos", "description": "Buste penché en avant, tirer la barre vers l'abdomen.", "difficulty": "intermédiaire" }
+  ],
+  "workouts": [
+    {
+      "id": 1,
+      "name": "Push",
+      "date": "2026-08-14",
+      "duration": 55,
+      "notes": "Bonne séance, forme correcte sur le développé couché.",
+      "exercises": [
+        { "exerciseId": 1, "sets": [ { "setNumber": 1, "repetitions": 10, "weight": 55 }, { "setNumber": 2, "repetitions": 10, "weight": 60 }, { "setNumber": 3, "repetitions": 8, "weight": 60 }, { "setNumber": 4, "repetitions": 8, "weight": 60 } ] },
+        { "exerciseId": 5, "sets": [ { "setNumber": 1, "repetitions": 10, "weight": 30 }, { "setNumber": 2, "repetitions": 10, "weight": 30 }, { "setNumber": 3, "repetitions": 8, "weight": 32 } ] },
+        { "exerciseId": 8, "sets": [ { "setNumber": 1, "repetitions": 12, "weight": 0 }, { "setNumber": 2, "repetitions": 10, "weight": 0 } ] }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Pull",
+      "date": "2026-08-16",
+      "duration": 60,
+      "notes": "",
+      "exercises": [
+        { "exerciseId": 6, "sets": [ { "setNumber": 1, "repetitions": 8, "weight": 80 }, { "setNumber": 2, "repetitions": 6, "weight": 90 }, { "setNumber": 3, "repetitions": 6, "weight": 90 } ] },
+        { "exerciseId": 3, "sets": [ { "setNumber": 1, "repetitions": 8, "weight": 0 }, { "setNumber": 2, "repetitions": 7, "weight": 0 }, { "setNumber": 3, "repetitions": 6, "weight": 0 } ] },
+        { "exerciseId": 4, "sets": [ { "setNumber": 1, "repetitions": 12, "weight": 12 }, { "setNumber": 2, "repetitions": 10, "weight": 12 } ] }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Legs",
+      "date": "2026-08-18",
+      "duration": 65,
+      "notes": "Squat plus lourd que la dernière fois.",
+      "exercises": [
+        { "exerciseId": 2, "sets": [ { "setNumber": 1, "repetitions": 10, "weight": 70 }, { "setNumber": 2, "repetitions": 8, "weight": 80 }, { "setNumber": 3, "repetitions": 8, "weight": 80 }, { "setNumber": 4, "repetitions": 6, "weight": 85 } ] },
+        { "exerciseId": 7, "sets": [ { "setNumber": 1, "repetitions": 12, "weight": 16 }, { "setNumber": 2, "repetitions": 12, "weight": 16 } ] },
+        { "exerciseId": 9, "sets": [ { "setNumber": 1, "repetitions": 1, "weight": 0 } ] }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Push",
+      "date": "2026-08-20",
+      "duration": 50,
+      "notes": "",
+      "exercises": [
+        { "exerciseId": 1, "sets": [ { "setNumber": 1, "repetitions": 10, "weight": 60 }, { "setNumber": 2, "repetitions": 8, "weight": 65 }, { "setNumber": 3, "repetitions": 8, "weight": 65 } ] },
+        { "exerciseId": 10, "sets": [ { "setNumber": 1, "repetitions": 10, "weight": 40 }, { "setNumber": 2, "repetitions": 10, "weight": 40 } ] }
+      ]
+    }
+  ],
+  "workoutTemplates": [
+    { "id": 1, "name": "Push", "description": "Pectoraux, épaules, triceps", "exerciseIds": [1, 5, 8] },
+    { "id": 2, "name": "Pull", "description": "Dos, biceps", "exerciseIds": [6, 3, 4, 10] },
+    { "id": 3, "name": "Legs", "description": "Jambes, abdominaux", "exerciseIds": [2, 7, 9] },
+    { "id": 4, "name": "Full Body", "description": "Séance complète corps entier", "exerciseIds": [1, 2, 6, 5] }
+  ],
+  "goals": [
+    { "id": 1, "name": "Développé couché", "currentValue": 65, "targetValue": 80, "unit": "kg", "deadline": "2026-12-01", "status": "en cours" },
+    { "id": 2, "name": "Squat", "currentValue": 85, "targetValue": 100, "unit": "kg", "deadline": "2026-12-01", "status": "en cours" },
+    { "id": 3, "name": "Tractions strictes", "currentValue": 8, "targetValue": 15, "unit": "reps", "deadline": "2026-11-01", "status": "en cours" }
+  ],
+  "weightHistory": [
+    { "id": 1, "weight": 74.5, "date": "2026-07-01" },
+    { "id": 2, "weight": 74.2, "date": "2026-07-08" },
+    { "id": 3, "weight": 73.8, "date": "2026-07-15" },
+    { "id": 4, "weight": 74.0, "date": "2026-07-22" },
+    { "id": 5, "weight": 73.5, "date": "2026-07-29" },
+    { "id": 6, "weight": 73.2, "date": "2026-08-05" },
+    { "id": 7, "weight": 72.9, "date": "2026-08-12" },
+    { "id": 8, "weight": 72.6, "date": "2026-08-19" }
+  ]
+}
