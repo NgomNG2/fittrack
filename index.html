@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FITTRACK Lite — Suivi d'entraînement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css" />
+<!-- <link rel="stylesheet" href="styles/layout.css" />
+<link rel="stylesheet" href="styles/forms.css" />
+<link rel="stylesheet" href="styles/features.css" />
+<link rel="stylesheet" href="styles/overlays-and-ui.css" />
+<link rel="stylesheet" href="styles/print-responsive.css" /> -->
+</head>
+<body>
+
+<div class="collapsed-bar" id="collapsedBar">
+  <button class="icon-btn" id="sidebarOpenBtn" title="Afficher la navigation">☰</button>
+  <span class="collapsed-brand">FITTRACK <span>LITE</span></span>
+  <button class="icon-btn theme-toggle-collapsed" id="themeToggleCollapsed" title="Changer de thème">🌙</button>
+</div>
+
+<div class="app" id="appRoot">
+
+  <!-- Sidebar / nav -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">FT</span>
+      <div>
+        <p class="brand-name">FITTRACK<span>LITE</span></p>
+        <p class="brand-sub">Suivi d'entraînement</p>
+      </div>
+      <button class="sidebar-hide-btn" id="sidebarToggle" title="Masquer la navigation">⟨</button>
+    </div>
+    <nav class="nav" id="mainNav">
+      <button class="nav-item active" data-view="dashboard">
+        <span class="nav-num">01</span> Dashboard
+      </button>
+      <button class="nav-item" data-view="exercises">
+        <span class="nav-num">02</span> Exercices
+      </button>
+      <button class="nav-item" data-view="workouts">
+        <span class="nav-num">03</span> Séances
+      </button>
+      <button class="nav-item" data-view="progress">
+        <span class="nav-num">04</span> Progression
+      </button>
+      <button class="nav-item" data-view="goals">
+        <span class="nav-num">05</span> Objectifs
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <p>json-server · db.json</p>
+      <span class="status-dot" id="apiStatus"></span>
+      <span id="apiStatusLabel">connexion…</span>
+    </div>
+    <button class="theme-toggle" id="themeToggle">
+      <span id="themeToggleIcon">🌙</span> <span id="themeToggleLabel">Mode sombre</span>
+    </button>
+  </aside>
+
+  <!-- Mobile top bar -->
+  <header class="topbar">
+    <span class="brand-mark small">FT</span>
+    <select id="mobileNav" class="mobile-nav-select">
+      <option value="dashboard">Dashboard</option>
+      <option value="exercises">Exercices</option>
+      <option value="workouts">Séances</option>
+      <option value="progress">Progression</option>
+      <option value="goals">Objectifs</option>
+    </select>
+    <button class="icon-btn" id="themeToggleMobile" title="Changer de thème">🌙</button>
+  </header>
+
+  <main class="content">
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="view active" id="view-dashboard">
+      <div class="view-head">
+        <div>
+          <p class="eyebrow">Vue d'ensemble</p>
+          <h1>Tableau de bord</h1>
+        </div>
+        <button class="btn btn-ghost" id="refreshDash">Actualiser</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-plate">
+          <span class="stat-label">Séances réalisées</span>
+          <span class="stat-value" id="statSessions">–</span>
+        </div>
+        <div class="stat-plate">
+          <span class="stat-label">Dernière séance</span>
+          <span class="stat-value stat-value--sm" id="statLastSession">–</span>
+        </div>
+        <div class="stat-plate">
+          <span class="stat-label">Poids actuel</span>
+          <span class="stat-value" id="statWeight">–</span>
+        </div>
+        <div class="stat-plate">
+          <span class="stat-label">Volume total</span>
+          <span class="stat-value" id="statVolume">–</span>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Évolution du poids</h2>
+          </div>
+          <canvas id="dashWeightChart" height="160"></canvas>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Objectifs en cours</h2>
+          </div>
+          <div id="dashGoals" class="goal-mini-list"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Meilleures performances</h2>
+          <p class="panel-sub">Charge maximale enregistrée par exercice</p>
+        </div>
+        <div id="dashBestLifts" class="best-lifts"></div>
+      </div>
+    </section>
+
+    <!-- ============ EXERCICES ============ -->
+    <section class="view" id="view-exercises">
+      <div class="view-head">
+        <div>
+          <p class="eyebrow">Bibliothèque</p>
+          <h1>Exercices</h1>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input type="search" id="exerciseSearch" placeholder="Rechercher un exercice…" class="input" />
+        <select id="muscleFilter" class="input select">
+          <option value="all">Tous les groupes musculaires</option>
+        </select>
+      </div>
+
+      <div id="exerciseList" class="exercise-grid"></div>
+    </section>
+
+    <!-- ============ SÉANCES ============ -->
+    <section class="view" id="view-workouts">
+      <div class="view-head">
+        <div>
+          <p class="eyebrow">Historique</p>
+          <h1>Séances</h1>
+        </div>
+        <div class="view-head-actions">
+          <button class="btn btn-ghost" id="exportCsvBtn">Exporter en CSV</button>
+          <button class="btn btn-ghost" id="exportPdfBtn">Exporter en PDF</button>
+          <button class="btn btn-primary" id="newWorkoutBtn">+ Nouvelle séance</button>
+        </div>
+      </div>
+
+      <div id="workoutList" class="workout-list"></div>
+
+      <!-- Bilan imprimable, masqué à l'écran, visible uniquement à l'impression -->
+      <div id="printReport" class="print-only"></div>
+    </section>
+
+    <!-- ============ PROGRESSION ============ -->
+    <section class="view" id="view-progress">
+      <div class="view-head">
+        <div>
+          <p class="eyebrow">Évolution</p>
+          <h1>Progression</h1>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Poids corporel</h2>
+          <div class="period-toggle" id="periodToggle">
+            <button type="button" class="period-btn active" data-period="7">7 jours</button>
+            <button type="button" class="period-btn" data-period="30">30 jours</button>
+            <button type="button" class="period-btn" data-period="all">Tout</button>
+          </div>
+        </div>
+        <canvas id="progressChart" height="140"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Comparer un exercice</h2>
+          <select id="compareExerciseSelect" class="input select"></select>
+        </div>
+        <p class="panel-sub" id="compareEmptyState">Choisis un exercice pour voir l'évolution de sa charge maximale séance après séance.</p>
+        <canvas id="compareChart" height="140" style="display:none;"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Ajouter une pesée</h2>
+        </div>
+        <form id="weightForm" class="inline-form">
+          <div class="form-group">
+            <label for="weightInput">Poids (kg)</label>
+            <input type="number" id="weightInput" step="0.1" min="0" required />
+          </div>
+          <div class="form-group">
+            <label for="weightDate">Date</label>
+            <input type="date" id="weightDate" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Historique des pesées</h2>
+        </div>
+        <div id="weightHistoryList" class="weight-history-list"></div>
+      </div>
+    </section>
+
+    <!-- ============ OBJECTIFS ============ -->
+    <section class="view" id="view-goals">
+      <div class="view-head">
+        <div>
+          <p class="eyebrow">Cibles</p>
+          <h1>Objectifs</h1>
+        </div>
+        <button class="btn btn-primary" id="newGoalBtn">+ Nouvel objectif</button>
+      </div>
+
+      <div id="goalList" class="goal-grid"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODAL : Nouvelle / édition séance ============ -->
+<div class="modal-backdrop" id="workoutModal">
+  <div class="modal modal-lg">
+    <div class="modal-head">
+      <h2 id="workoutModalTitle">Nouvelle séance</h2>
+      <button class="modal-close" data-close="workoutModal">&times;</button>
+    </div>
+    <form id="workoutForm">
+      <input type="hidden" id="workoutId" />
+      <div class="form-row">
+        <div class="form-group">
+          <label for="workoutName">Nom de la séance</label>
+          <input type="text" id="workoutName" placeholder="Ex: Push" required />
+        </div>
+        <div class="form-group">
+          <label for="workoutDate">Date</label>
+          <input type="date" id="workoutDate" required />
+        </div>
+        <div class="form-group">
+          <label for="workoutDuration">Durée (min)</label>
+          <input type="number" id="workoutDuration" min="0" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="workoutNotes">Notes</label>
+        <textarea id="workoutNotes" rows="2" placeholder="Optionnel"></textarea>
+      </div>
+
+      <div class="template-picker">
+        <label for="templateSelect">Charger un modèle de séance (optionnel)</label>
+        <select id="templateSelect" class="input select">
+          <option value="">— Partir d'une séance vide —</option>
+        </select>
+      </div>
+
+      <div class="exercises-builder">
+        <div class="panel-head">
+          <h3>Exercices de la séance</h3>
+          <button type="button" class="btn btn-ghost btn-sm" id="addExerciseRow">+ Ajouter un exercice</button>
+        </div>
+        <div id="exerciseRows"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="workoutModal">Annuler</button>
+        <button type="submit" class="btn btn-primary">Enregistrer la séance</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL : Détail séance ============ -->
+<div class="modal-backdrop" id="workoutDetailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="detailWorkoutTitle">Séance</h2>
+      <button class="modal-close" data-close="workoutDetailModal">&times;</button>
+    </div>
+    <div id="workoutDetailBody"></div>
+  </div>
+</div>
+
+<!-- ============ MODAL : Nouvel objectif ============ -->
+<div class="modal-backdrop" id="goalModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Nouvel objectif</h2>
+      <button class="modal-close" data-close="goalModal">&times;</button>
+    </div>
+    <form id="goalForm">
+      <div class="form-group">
+        <label for="goalName">Nom de l'objectif</label>
+        <input type="text" id="goalName" placeholder="Ex: Développé couché" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="goalCurrent">Valeur actuelle</label>
+          <input type="number" id="goalCurrent" step="0.1" required />
+        </div>
+        <div class="form-group">
+          <label for="goalTarget">Valeur cible</label>
+          <input type="number" id="goalTarget" step="0.1" required />
+        </div>
+        <div class="form-group">
+          <label for="goalUnit">Unité</label>
+          <input type="text" id="goalUnit" placeholder="kg, reps…" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="goalDeadline">Échéance</label>
+        <input type="date" id="goalDeadline" />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="goalModal">Annuler</button>
+        <button type="submit" class="btn btn-primary">Créer l'objectif</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script type="module" src="scripts/init.js"></script>
+</body>
+</html>
