@@ -1,0 +1,81 @@
+/* ============================================================
+   FITTRACK LITE — design tokens
+   Palette : charbon d'atelier + orange effort + vert progression
+   Display : Oswald (condensé, athlétique) — Body : Inter — Data : IBM Plex Mono
+   ============================================================ */
+
+:root {
+  --bg: #101314;
+  --surface: #181D1F;
+  --surface-2: #1F2629;
+  --surface-3: #262E31;
+  --border: #2B3336;
+  --text: #EDEFEF;
+  --text-dim: #91999C;
+  --text-faint: #5D6567;
+
+  --orange: #FF5A1F;
+  --orange-soft: rgba(255, 90, 31, 0.14);
+  --orange-dim: #C4471A;
+
+  --teal: #2BD9A8;
+  --teal-soft: rgba(43, 217, 168, 0.14);
+
+  --red: #FF5A6E;
+  --red-soft: rgba(255, 90, 110, 0.14);
+
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* ---------- mode clair ---------- */
+
+body.light-theme {
+  --bg: #e1e1e1;
+  --surface: #ede7e7;
+  --surface-2: #e0e3e5;
+  --surface-3: #E6E8EA;
+  --border: #E1E4E6;
+  --text: #1B1F21;
+  --text-dim: #5B6469;
+  --text-faint: #9AA1A5;
+
+  --orange-soft: rgba(255, 90, 31, 0.10);
+  --teal-soft: rgba(43, 217, 168, 0.12);
+  --red-soft: rgba(255, 90, 110, 0.10);
+  
+  --teal: #1c9270;
+}
+
+body.light-theme .brand-mark { color: #17110B; }
+body.light-theme .btn-primary { color: #FFFFFF; }
+body.light-theme .sidebar-open-btn,
+body.light-theme .collapsed-bar { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+
+/* ---------- reset & base ---------- */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(255, 90, 31, 0.06), transparent 40%),
+    radial-gradient(circle at 0% 100%, rgba(43, 217, 168, 0.05), transparent 40%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: 0.01em; }
+p { margin: 0; }
+button { font-family: var(--font-body); }

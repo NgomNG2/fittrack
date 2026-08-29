@@ -1,0 +1,54 @@
+/* ---------- print / PDF export ---------- */
+
+.print-only { display: none; }
+
+@media print {
+  .sidebar, .topbar, .view-head-actions, .toolbar,
+  #newWorkoutBtn, #refreshDash, .modal-backdrop, .toast {
+    display: none !important;
+  }
+  .content { padding: 0; max-width: 100%; }
+  .view { display: none !important; }
+  .print-only {
+    display: block !important;
+    color: #111;
+    font-family: var(--font-body);
+  }
+  .print-only h1 { font-family: var(--font-display); margin-bottom: 4px; }
+  .print-only table { width: 100%; border-collapse: collapse; margin-bottom: 18px; font-size: 12px; }
+  .print-only th, .print-only td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+  .print-only .print-meta { color: #555; font-size: 12px; margin-bottom: 20px; }
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 880px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .topbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .mobile-nav-select {
+    flex: 1;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    font-size: 13px;
+  }
+  .content { padding: 24px 18px 60px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .exercise-row-builder { grid-template-columns: 1fr; }
+  .view-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .view-head-actions { flex-wrap: wrap; }
+  .sidebar-open-btn { display: none !important; }
+  .collapsed-bar { display: none !important; }
+  body.sidebar-hidden .content { padding-top: 24px; }
+}
